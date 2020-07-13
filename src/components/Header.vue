@@ -11,6 +11,11 @@
                     </router-link>
                 </li>
                 <li class="nav-item">
+                    <router-link class="nav-link" active-class="active" exact :to="{ name: 'about' }">
+                        About
+                    </router-link>
+                </li>
+                <li class="nav-item">
                     <router-link class="nav-link" active-class="active" exact :to="{ name: 'login' }">
                         <i class="ion-compose" /> Sign in
                     </router-link>
