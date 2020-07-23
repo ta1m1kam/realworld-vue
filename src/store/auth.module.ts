@@ -1,27 +1,41 @@
 import ApiService from "@/common/api.service";
-import { REGISTER } from "./actions.type";
-import { SET_AUTH, SET_ERROR } from "./mutations.type";
+import JwtService from "@/common/jwt.service";
+import { REGISTER, LOGOUT } from "./actions.type";
+import { SET_AUTH, SET_ERROR, PURGE_AUTH } from "./mutations.type";
 
 const state = {
     errors: null,
     user: {},
-    isAuthenticated: false
+    isAuthenticated: !!JwtService.getToken
+}
+
+const getters = {
+  currentUser(state: any): { key: string } {
+    return state.user;
+  },
+  isAuthenticated(state: any): boolean {
+    return state.isAuthenticated;
+  }
 }
 
 const actions = {
     [REGISTER](context: any, credentials: any) {
-        return new Promise((resolve, reject) => {
-          ApiService.post("users", { user: credentials })
-            .then(({ data }) => {
-              context.commit(SET_AUTH, data.user);
-              resolve(data);
-            })
-            .catch(({ response }) => {
-              context.commit(SET_ERROR, response.data.errors);
-              reject(response);
-            });
-        });
-      },
+      return new Promise((resolve, reject) => {
+        ApiService.post("users", { user: credentials })
+          .then(({ data }) => {
+            context.commit(SET_AUTH, data.user);
+            console.log(data.user);
+            resolve(data);
+          })
+          .catch(({ response }) => {
+            context.commit(SET_ERROR, response.data.errors);
+            reject(response);
+          });
+      });
+    },
+    [LOGOUT](context: any) {
+      context.commit(PURGE_AUTH);
+    }
 }
 
 const mutations = {
@@ -32,11 +46,19 @@ const mutations = {
         state.isAuthenticated = true;
         state.user = user;
         state.errors = {};
+        JwtService.saveToken(state.user.token);
+    },
+    [PURGE_AUTH](state: any) {
+      state.isAuthenticated = false;
+      state.user = {};
+      state.errors = {};
+      JwtService.destroyToken();
     }
 }
 
 export default {
     state,
     actions,
-    mutations
+    mutations,
+    getters
 }

@@ -1,2 +1,2 @@
-export const API_URL = "https://conduit.productionready.io/api";
+export const API_URL = "http://f089e781527c.ngrok.io/api";
 export default API_URL;
