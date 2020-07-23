@@ -36,7 +36,8 @@ export const routes: Array<RouteConfig> = [
       {
         path: '/@:username',
         name: 'profile',
-        component: Profile
+        component: Profile,
+        props: true
       },
       {
         path: '/editor/:slug?',

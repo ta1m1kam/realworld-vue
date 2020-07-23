@@ -48,14 +48,14 @@
                     </router-link>
                 </li>
                 <li class="nav-item" v-if="currentUser.username">
-                    <router-link class="nav-link" active-class="active" exact :to="{ name: 'profile' }">
+                    <router-link class="nav-link" active-class="active" exact :to="{ name: 'profile', params: { username: currentUser.username } }">
                         {{ currentUser.username }}
                     </router-link>
                 </li>
                 <li class="nav-item">
-                    <button @click="logout" class="nav-link" active-class="active">
+                    <a @click="logout" class="nav-link" active-class="active">
                         Logout
-                    </button>
+                    </a>
                 </li>
             </ul>
         </div>

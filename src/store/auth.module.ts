@@ -1,6 +1,6 @@
 import ApiService from "@/common/api.service";
 import JwtService from "@/common/jwt.service";
-import { REGISTER, LOGOUT } from "./actions.type";
+import { REGISTER, LOGIN, LOGOUT } from "./actions.type";
 import { SET_AUTH, SET_ERROR, PURGE_AUTH } from "./mutations.type";
 
 const state = {
@@ -32,6 +32,18 @@ const actions = {
             reject(response);
           });
       });
+    },
+    [LOGIN](context: any, credentials: any) {
+      return new Promise(resolve => {
+        ApiService.post("users/login", { user: credentials })
+          .then(({ data }) => {
+            context.commit(SET_AUTH, data.user);
+            resolve(data);
+          })
+          .catch(({ response }) => {
+            context.commit(SET_ERROR, response.data.errors);
+          })
+      })
     },
     [LOGOUT](context: any) {
       context.commit(PURGE_AUTH);
