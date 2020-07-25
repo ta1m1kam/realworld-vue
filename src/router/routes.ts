@@ -10,8 +10,19 @@ import { RouteConfig } from 'vue-router'
 export const routes: Array<RouteConfig> = [
     {
         path: '/',
-        name: 'home',
-        component: Home
+        component: Home,
+        children: [
+          {
+            path: "",
+            name: 'home',
+            component: () => import("@/views/HomeGlobal.vue")
+          },
+          {
+            path: "my-feed",
+            name: 'home-my-feed',
+            component: () => import("@/views/HomeMyFeed.vue")
+          }
+        ]
       },
       {
         path: '/about',
