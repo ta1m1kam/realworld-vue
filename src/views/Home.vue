@@ -20,6 +20,15 @@
                   Your Feed
                 </router-link>
               </li>
+              <li v-if="tag" class="nav-item">
+                <router-link
+                  :to="{ name: 'home-tag', params: { tag } }"
+                  class="nav-link"
+                  active-class="active"
+                >
+                  <i class="io-pound"></i> {{ tag }}
+                </router-link>
+              </li>
             </ul>
           </div>
           <router-view />
@@ -27,6 +36,9 @@
         <div class="col-md-3">
           <div class="sidebar">
             <p>Popular Tags</p>
+            <div class="tag-list">
+              <RwvTag v-for="(tag, index) in tags" :name="tag" :key="index" />
+            </div>
           </div>
         </div>
       </div>
@@ -36,12 +48,26 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import RwvTag from "@/components/Tag.vue";
+import { FETCH_TAGS } from '@/store/actions.type';
 
 export default Vue.extend({
   name: 'Home',
+  components: {
+    RwvTag
+  },
+  mounted() {
+    this.$store.dispatch(FETCH_TAGS);
+  },
   computed: {
     isAuthenticated() {
       return this.$store.getters.isAuthenticated;
+    },
+    tags() {
+      return this.$store.getters.tags;
+    },
+    tag() {
+      return this.$route.params.tag;
     }
   }
 });

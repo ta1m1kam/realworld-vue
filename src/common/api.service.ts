@@ -56,3 +56,9 @@ export const ArticlesService = {
         return ApiService.update("articles", slug, { article: params });
     }
 }
+
+export const TagsService = {
+    get() {
+        return ApiService.get("tags");
+    }
+}

@@ -22,6 +22,11 @@ export const routes: Array<RouteConfig> = [
             path: "my-feed",
             name: 'home-my-feed',
             component: () => import("@/views/HomeMyFeed.vue")
+          },
+          {
+            path: "tag/:tag",
+            name: 'home-tag',
+            component: () => import("@/views/HomeTag.vue")
           }
         ]
       },
