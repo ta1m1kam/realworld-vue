@@ -3,6 +3,7 @@ import About from '@/views/About.vue'
 import Register from '@/views/Register.vue'
 import Login from '@/views/Login.vue'
 import ArticleEdit from '@/views/ArticleEdit.vue'
+import Article from '@/views/Article.vue'
 import Settings from '@/views/Settings.vue'
 import Profile from '@/views/Profile.vue'
 import { RouteConfig } from 'vue-router'
@@ -51,8 +52,15 @@ export const routes: Array<RouteConfig> = [
         props: true
       },
       {
+        path: '/articles/:slug',
+        name: 'article',
+        component: Article,
+        props: true
+      },
+      {
         path: '/editor/:slug?',
         name: 'article-edit',
-        component: ArticleEdit
+        component: ArticleEdit,
+        props: true
       }
 ]

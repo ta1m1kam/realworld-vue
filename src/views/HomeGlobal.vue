@@ -1,12 +1,16 @@
 <template>
   <div class="home-global">
-    Home Global
+      <RwvArticleList type="all" />
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-export default Vue.extend({
-    name: "rwv-home-global"
-})
+<script>
+import RwvArticleList from "@/components/ArticleList";
+
+export default {
+    name: "rwv-home-global",
+    components: {
+        RwvArticleList
+    }
+};
 </script>
